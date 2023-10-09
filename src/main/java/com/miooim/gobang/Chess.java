@@ -11,6 +11,22 @@ package com.miooim.gobang;
  */
 public class Chess {
     /**
+     * 机器
+     */
+    public static final int M = -1;
+
+    /**
+     * 人
+     */
+    public static final int H = 1;
+
+    /**
+     * 空
+     */
+    public static final int K = 0;
+
+
+    /**
      * x 轴
      */
     private int x;
@@ -27,6 +43,7 @@ public class Chess {
      * 1 ：人
      */
     private int chessOwner;
+
 
     public Chess(int x, int y, int chessOwner) {
         this.x = x;

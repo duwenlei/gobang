@@ -19,20 +19,42 @@ public class WindowUi {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(518, 538);
-        Chessboard contentPane = new Chessboard();
-        frame.setContentPane(contentPane);
+        Chessboard chessboardPanel = new Chessboard();
+        frame.setContentPane(chessboardPanel);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        contentPane.addMouseListener(new MouseAdapter() {
+        chessboardPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                int sellSize = contentPane.getSellSize();
+                int sellSize = chessboardPanel.getSellSize();
                 int x = (e.getX() - 5) / sellSize;
                 int y = (e.getY() - 5) / sellSize;
-                contentPane.addChess(new Chess(x, y, 1));
+                Chess chess = new Chess(x, y, 1);
+                chessboardPanel.addChess(chess);
+                if (chessboardPanel.isWin(chess)) {
+                    JOptionPane.showMessageDialog(frame, "您获胜了", "结束", JOptionPane.PLAIN_MESSAGE);
+                    // 重开
+                    chessboardPanel.reload();
+                }
+
+                // 机器下棋
+                Chess machineChess = chessboardPanel.machineLuozi();
+                if (machineChess == null) {
+                    JOptionPane.showMessageDialog(frame, "平局", "结束", JOptionPane.PLAIN_MESSAGE);
+                    // 重开
+                    chessboardPanel.reload();
+                }
+
+                chessboardPanel.addChess(machineChess);
+                if (chessboardPanel.isWin(machineChess)) {
+                    JOptionPane.showMessageDialog(frame, "人机获胜了", "结束", JOptionPane.PLAIN_MESSAGE);
+                    // 重开
+                    chessboardPanel.reload();
+                }
+
             }
         });
 
